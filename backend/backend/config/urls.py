@@ -11,11 +11,8 @@ def health(request):
         try:
             with connection.cursor() as c:
                 c.execute("SELECT 1")
-        except Exception as e:
-            return JsonResponse(
-                {"status": "db_error", "detail": f"{type(e).__name__}: {str(e)[:200]}"},
-                status=503,
-            )
+        except Exception:
+            return JsonResponse({"status": "db_error"}, status=503)
     return JsonResponse({"status": "ok"})
 
 
