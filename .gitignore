@@ -1,0 +1,25 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+venv/
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
+
+# uploads (production uses Supabase Storage)
+media/
+
+# node
+node_modules/
+dist/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+*.log

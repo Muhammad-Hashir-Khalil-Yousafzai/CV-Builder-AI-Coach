@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* shared motion helpers used by job pages */
+@keyframes jobShimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes jobSpin { to { transform: rotate(360deg); } }
+@keyframes jobPop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.job-skel { background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%); background-size: 200% 100%; animation: jobShimmer 1.4s linear infinite; }
+.job-spin { animation: jobSpin 0.8s linear infinite; }
+.job-pop { animation: jobPop 0.35s ease-out; }
+.job-bar-fill { transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), height 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) { .job-skel, .job-spin, .job-pop { animation: none !important; } .job-bar-fill { transition: none; } }

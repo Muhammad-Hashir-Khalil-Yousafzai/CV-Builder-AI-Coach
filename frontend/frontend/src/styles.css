@@ -1,0 +1,14 @@
+/* Add this import to your existing index.css / App.css (or paste these rules into it).
+   Requires Tailwind already set up (tailwind.config.js content paths pointing at ./src/**). */
+
+.input {
+  @apply w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900;
+}
+
+.err {
+  @apply text-red-600 text-sm mt-1;
+}
+
+.btn-primary {
+  @apply bg-slate-900 text-white rounded-lg py-2.5 px-4 font-medium disabled:opacity-50;
+}
