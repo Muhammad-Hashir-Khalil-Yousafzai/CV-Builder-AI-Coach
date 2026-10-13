@@ -11,9 +11,10 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = config("SECRET_KEY", default="dev-secret-key-change-in-production")
 DEBUG = config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
-_render_host = config("RENDER_EXTERNAL_HOSTNAME", default="")  # set automatically by Render
-if _render_host:
-    ALLOWED_HOSTS = [*ALLOWED_HOSTS, _render_host]
+# hosts set automatically by the platform (Vercel / Render): the app is reachable on them without manual config
+_platform_hosts = [h for h in (config("VERCEL_URL", default=""), config("VERCEL_BRANCH_URL", default=""),
+                               config("VERCEL_PROJECT_PRODUCTION_URL", default=""), config("RENDER_EXTERNAL_HOSTNAME", default="")) if h]
+ALLOWED_HOSTS = [*ALLOWED_HOSTS, *_platform_hosts]
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
@@ -149,7 +150,7 @@ CORS_ALLOWED_ORIGINS = config(
 CORS_ALLOW_CREDENTIALS = True
 
 # ---- Production (free hosting) ----
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="", cast=Csv())
+CSRF_TRUSTED_ORIGINS = [*config("CSRF_TRUSTED_ORIGINS", default="", cast=Csv()), *[f"https://{h}" for h in _platform_hosts]]
 try:  # serves the admin/DRF static files from gunicorn (pip install whitenoise)
     import whitenoise  # noqa: F401
     MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")

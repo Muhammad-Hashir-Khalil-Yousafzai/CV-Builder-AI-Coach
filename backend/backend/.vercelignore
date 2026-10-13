@@ -1,0 +1,9 @@
+venv/
+.venv/
+media/
+db.sqlite3
+.env
+.env.*
+__pycache__/
+staticfiles/
+test_db.py
